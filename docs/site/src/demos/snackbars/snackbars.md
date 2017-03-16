@@ -11,6 +11,14 @@ Only one snackbar may be displayed at a time.
 The most basic snackbar.
 {{demo='demos/snackbars/SimpleSnackbar.js'}}
 
+### Action
+A snackbar with an action.
+{{demo='demos/snackbars/ActionSnackbar.js'}}
+
+### Message Length
+Some snackbars with varying message length.
+{{demo='demos/snackbars/LongTextSnackbar.js'}}
+
 ### Positioned
 There may be circumstances when the placement of the snackbar needs to be more flexible.
 {{demo='demos/snackbars/PositionedSnackbar.js'}}
