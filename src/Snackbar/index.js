@@ -2,3 +2,4 @@
 
 export default from './Snackbar';
 export Snackbar from './Snackbar';
+export SnackbarActions from './SnackbarActions';

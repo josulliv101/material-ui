@@ -15,12 +15,14 @@ export default class TransitionsSnackbar extends Component {
   render() {
     return (
       <div>
-        <Button onClick={() => this.setState({ open: true })}>
+        <Button
+          onClick={() => this.setState({ open: true })}
+        >
           Show Snackbar with Fade Transition
         </Button>
         <Snackbar
-          anchorOrigin={{vertical: "top", horizontal: "right"}}
-          message={"I love snacks."}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          message={'I love snacks.'}
           open={this.state.open}
           onRequestClose={this.handleRequestClose}
           transition={<Fade />}

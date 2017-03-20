@@ -2,24 +2,21 @@
 
 import React, { Component } from 'react';
 import Button from 'material-ui/Button';
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar, { SnackbarActions } from 'material-ui/Snackbar';
 
 export default class SimpleSnackbar extends Component {
   state = {
     open: false,
     message: null,
-    action: false
+    action: false,
   };
 
   handleRequestClose = () => this.setState({ open: false });
 
   render() {
-
-  	const sm = "I love snacks.";
-  	const md = "I love canollis. I love cookies. I love chocolate.";
-  	const lg = "I love canollis. I love cookies. I love chocolate. I love cheesecake. I love cupcakes. I love cake.";
-    const action = <Button accent onClick={this.handleRequestClose}>my action</Button>;
-
+    const sm = 'I love snacks.';
+    const md = 'I love canolis. I love cookies. I love cupcakes.';
+    const lg = 'I love canolis. I love cookies. I love cupcakes. I love cheese. I love chocolate.';
     return (
       <div>
         <Button onClick={() => this.setState({ open: true, message: sm })}>
@@ -32,15 +29,16 @@ export default class SimpleSnackbar extends Component {
           Large Message
         </Button>
         <Snackbar
-          anchorOrigin={{vertical: "top", horizontal: "center"}}
+          anchorOrigin={{ vertical: 'top' }}
           message={this.state.message}
           open={this.state.open}
           onRequestClose={this.handleRequestClose}
         >
-          {action}
+          <SnackbarActions>
+            <Button accent compact onClick={this.handleRequestClose}>my action</Button>
+          </SnackbarActions>
         </Snackbar>
       </div>
     );
   }
 }
-

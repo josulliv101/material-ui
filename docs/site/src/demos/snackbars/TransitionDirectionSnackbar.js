@@ -16,21 +16,29 @@ export default class TransitionsSnackbar extends Component {
   render() {
     return (
       <div>
-        <Button onClick={() => this.setState({ open: true, slideDirection: "down" })}>
+        <Button
+          onClick={() => this.setState({ open: true, slideDirection: 'down' })}
+        >
           Down
         </Button>
-        <Button onClick={() => this.setState({ open: true, slideDirection: "left" })}>
+        <Button
+          onClick={() => this.setState({ open: true, slideDirection: 'left' })}
+        >
           Right
         </Button>
-        <Button onClick={() => this.setState({ open: true, slideDirection: "up" })}>
+        <Button
+          onClick={() => this.setState({ open: true, slideDirection: 'up' })}
+        >
           Up
         </Button>
-        <Button onClick={() => this.setState({ open: true, slideDirection: "right" })}>
+        <Button
+          onClick={() => this.setState({ open: true, slideDirection: 'right' })}
+        >
           Left
         </Button>
         <Snackbar
-          anchorOrigin={{vertical: "top", horizontal: "right"}}
-          message={"I love snacks."}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          message={'I love snacks.'}
           open={this.state.open}
           onRequestClose={this.handleRequestClose}
           transition={<Slide direction={this.state.slideDirection} />}

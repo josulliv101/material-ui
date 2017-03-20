@@ -11,9 +11,13 @@ Only one snackbar may be displayed at a time.
 The most basic snackbar.
 {{demo='demos/snackbars/SimpleSnackbar.js'}}
 
-### Action
+### Actions
 A snackbar with an action.
 {{demo='demos/snackbars/ActionSnackbar.js'}}
+
+### Multiple
+Displaying many snackbars in a row.
+{{demo='demos/snackbars/MultipleSnackbar.js'}}
 
 ### Message Length
 Some snackbars with varying message length.
@@ -26,7 +30,7 @@ There may be circumstances when the placement of the snackbar needs to be more f
 ## Transitions
 
 ### Control Direction
-Change the direction of the transition (default is Slide).
+Change the direction of the transition. Slide is the default transition.
 {{demo='demos/snackbars/TransitionDirectionSnackbar.js'}}
 
 ### Change Transition
