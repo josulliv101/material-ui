@@ -77,6 +77,7 @@ export const styleSheet = createStyleSheet('MuiSnackbar', ({ palette, breakpoint
     message: {
       lineHeight: '20px',
       padding: '14px 0',
+      fontWeight: 500,
       [breakpoints.up('md')]: {
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
