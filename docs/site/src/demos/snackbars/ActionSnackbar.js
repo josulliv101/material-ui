@@ -9,50 +9,29 @@ import Snackbar, { SnackbarActions } from 'material-ui/Snackbar';
 export default class SimpleSnackbar extends Component {
   state = {
     open: false,
-    action: 'btnUndo',
+    action: null,
   };
 
   handleRequestClose = () => this.setState({ open: false });
 
   render() {
-    const btnIconDelete = (
-      <IconButton
-        accent
-        onClick={this.handleRequestClose}
-        style={{
-          width: 24,
-          height: 36,
-          fontSize: 20,
-          position: 'relative',
-          left: 12,
-        }}
-      >
-        <Icon style={{ width: 24, fontSize: 20 }}>delete</Icon>
-      </IconButton>
-    );
     const btnUndo = (
-      <Button key="1" accent onClick={this.handleRequestClose}>Undo</Button>
+      <Button key="1" accent onClick={() => console.log('action')}>Undo</Button>
     );
     const btnRedo = (
-      <Button key="2" accent onClick={this.handleRequestClose}>Redo</Button>
+      <Button key="2" accent onClick={() => console.log('action')}>Redo</Button>
     );
-    const actions = { btnIconDelete, btnUndo, btnRedo, btnUndoRedo: [btnUndo, btnRedo] };
+    const actions = {  btnUndo, btnUndoRedo: [btnUndo, btnRedo] };
     return (
       <div>
         <Button onClick={() => this.setState({ open: true, action: 'btnUndo' })}>
           Undo Action
         </Button>
-        <Button onClick={() => this.setState({ open: true, action: 'btnRedo' })}>
-          Redo Action
-        </Button>
         <Button onClick={() => this.setState({ open: true, action: 'btnUndoRedo' })}>
           Undo/Redo Actions
         </Button>
-        <Button onClick={() => this.setState({ open: true, action: 'btnIconDelete' })}>
-          Icon Action
-        </Button>
         <Snackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          anchorOrigin={{ vertical: 'top' }}
           message={'I love snacks.'}
           open={this.state.open}
           onRequestClose={this.handleRequestClose}

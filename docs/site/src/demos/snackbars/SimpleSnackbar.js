@@ -18,12 +18,12 @@ export default class SimpleSnackbar extends Component {
         <Button
           onClick={() => this.setState({ open: true, message: 'I love snacks.' })}
         >
-          Show Snackbar (String)
+          Snackbar (String)
         </Button>
         <Button
           onClick={() => this.setState({ open: true, message: <em>I love snacks.</em> })}
         >
-          Show Snackbar (Node)
+          Snackbar (Element)
         </Button>
         <Snackbar
           message={this.state.message}

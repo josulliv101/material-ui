@@ -12,12 +12,8 @@ export const styleSheet = createStyleSheet('MuiSnackbarActions', () => {
     },
     button: {
       padding: '0 6px',
-      marginRight: 16,
       whiteSpace: 'nowrap',
       minWidth: 36,
-      '&:last-child': {
-        marginRight: 0,
-      },
     },
   };
 });

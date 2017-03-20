@@ -29,13 +29,13 @@ export default class SimpleSnackbar extends Component {
     return (
       <div>
         <Button onClick={() => this.setState({ open: true })}>
-          Show Snackbars
+          Multiple Snackbars
         </Button>
         {
           this.state.messages.length > 0 &&
           <Snackbar
             {...this.state.messages[0]}
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            anchorOrigin={{ vertical: 'top' }}
             open={this.state.open}
             onExited={this.handleNextSnackbar}
             onRequestClose={this.handleRequestClose}
