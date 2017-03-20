@@ -203,7 +203,7 @@ export default class Snackbar extends Component {
   }
 
   setTimer() {
-    // this.timerId = setTimeout(this.props.onRequestClose, this.props.autoHideDuration);
+    this.timerId = setTimeout(this.props.onRequestClose, this.props.autoHideDuration);
   }
 
   render() {
