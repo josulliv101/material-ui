@@ -6,7 +6,6 @@ import { duration } from '../styles/transitions';
 import {
   compose,
   defaultProps,
-  mapProps,
   withHandlers,
   withProps,
   withState,
@@ -15,43 +14,51 @@ import {
 const enhance = compose(
   defaultProps({
     autoHideDuration: 2000,
-    enterTransitionDuration: duration.enteringScreen,
-    leaveTransitionDuration: duration.leavingScreen,
   }),
   withState('pause', 'updatePause', false),
   withState('expired', 'updateExpired', false),
   withState('timerId', 'updateTimerId', null),
   withHandlers({
-    togglePause: props => () => props.updatePause(n => !n),
     handleTimeout: props => () => {
-      console.log('is paused', props.pause);
-      if (props.pause !== true) props.onRequestClose();
+      if (!props.pause) {
+        props.onRequestClose();
+      }
       props.updateExpired(true);
+    },
+    onMouseEnter: props => () => props.updatePause(true),
+    onMouseLeave: props => () => {
+      props.updatePause(false);
+      if (props.expired) props.onRequestClose();
     },
   }),
   withHandlers({
-    setTimer: props => () => {
-      const timerId = setTimeout(props.handleTimeout, props.autoHideDuration);
-      props.updateTimerId(timerId);
+    setTimer: ({handleTimeout, autoHideDuration, updateTimerId}) => () => {
+      const timerId = setTimeout(handleTimeout, autoHideDuration);
+      updateTimerId(timerId);
     },
   }),
-  withProps(({anchorOrigin: anchorOriginProp, pause, setTimer, updateExpired, expired, transition, enterTransitionDuration, leaveTransitionDuration, onEnter, onEntering, onEntered, onExit, onExiting, onExited, open}) => ({
+  withProps(({anchorOrigin: anchorOriginProp, transition, enterTransitionDuration = Snackbar.defaultProps.enterTransitionDuration, leaveTransitionDuration = Snackbar.defaultProps.leaveTransitionDuration}) => ({
     anchorOrigin: Object.assign({}, Snackbar.defaultProps.anchorOrigin, anchorOriginProp),
-    open,
     createTransition: typeof transition === 'function' ? createElement : cloneElement,
   })),
-  withProps(({anchorOrigin: {vertical, horizontal}, pause, setTimer, updateExpired, expired, transition: transitionProp, enterTransitionDuration, leaveTransitionDuration, onEnter, onEntering, onEntered, onExit, onExiting, onExited, open}) => ({
+  withProps(({ anchorOrigin: {vertical}, transition: transitionProp, ...props }) => ({
+    contentProps: {
+      children: props.children,
+      message: props.message,
+      onMouseEnter: props.onMouseEnter,
+      onMouseLeave: props.onMouseLeave,
+    },
     transitionProps: {
-      in: open,
+      in: props.open,
       transitionAppear: true,
-      enterTransitionDuration,
-      leaveTransitionDuration,
+      enterTransitionDuration: props.leaveTransitionDuration,
+      leaveTransitionDuration: props.leaveTransitionDuration,
       onEnter: noop,
       onEntering: node => node.style.visibility = 'visible',
-      onEntered: () => setTimer(),
+      onEntered: () => props.setTimer(),
       onExit: noop,
       onExiting: noop,
-      onExited: () => updateExpired(false),
+      onExited: () => props.updateExpired(false),
     },
     transition: transitionProp || <Slide direction={vertical === 'top' ? 'down' : 'up'} />,
   })),

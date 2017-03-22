@@ -7,7 +7,6 @@ import Modal from '../internal/Modal';
 import customPropTypes from '../utils/customPropTypes';
 import WithStateSnackbar from './WithStateSnackbar';
 import SnackbarContent from './SnackbarContent';
-import Slide from '../transitions/Slide';
 import { duration } from '../styles/transitions';
 
 export const styleSheet = createStyleSheet('MuiSnackbar', ({ breakpoints }) => {
@@ -124,21 +123,24 @@ export class Snackbar extends Component {
     const {
       anchorOrigin: {vertical, horizontal},
       children,
+      contentProps,
       className,
       createTransition,
       expired,
       message,
+      onMouseEnter,
+      onMouseLeave,
       onRequestClose,
       open,
       pause,
       transition,
       transitionProps,
-      togglePause,
+      updatePause,
       ...other
     } = this.props;
 
     const classes = this.context.styleManager.render(styleSheet);
-    console.log('render', this.props);
+
     return (
       <Modal
         className={classNames(classes.modal,
@@ -156,16 +158,7 @@ export class Snackbar extends Component {
         {createTransition(
           transition,
           transitionProps,
-          <SnackbarContent
-            onMouseEnter={() => togglePause()}
-            onMouseLeave={() => {
-              togglePause();
-              if (expired) onRequestClose();
-            }}
-            style={{ visibility: 'hidden' }}
-            message={message}
-            children={children}
-          />
+          <SnackbarContent {...contentProps} style={{ visibility: 'hidden' }} />
         )}
       </Modal>
     );
