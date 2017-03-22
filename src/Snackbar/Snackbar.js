@@ -11,14 +11,16 @@ import { duration } from '../styles/transitions';
 
 export const styleSheet = createStyleSheet('MuiSnackbar', ({ breakpoints }) => {
   const gutter = 24;
-  const topSpace = { top: `${gutter}px` };
-  const bottomSpace = { top: `-${gutter}px` };
-  const rightSpace = { left: `-${gutter}px` };
-  const leftSpace = { left: `${gutter}px` };
-  const top = { alignItems: 'flex-start' };
-  const bottom = { alignItems: 'flex-end' };
-  const right = { justifyContent: 'flex-end' };
-  const left = { justifyContent: 'flex-start' };
+  const [topSpace, bottomSpace, rightSpace, leftSpace, top, bottom, right, left] = [
+    { top: `${gutter}px` },
+    { top: `-${gutter}px` },
+    { left: `-${gutter}px` },
+    { left: `${gutter}px` },
+    { alignItems: 'flex-start' },
+    { alignItems: 'flex-end' },
+    { justifyContent: 'flex-end' },
+    { justifyContent: 'flex-start' }
+  ];
   return {
     modal: {
       justifyContent: 'center',
@@ -100,7 +102,7 @@ export class Snackbar extends Component {
     /**
      * Transition component.
      */
-    transition: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+    transition: PropTypes.object,
   };
 
   static contextTypes = {
@@ -120,13 +122,13 @@ export class Snackbar extends Component {
   }
 
   render() {
+    console.log('render', this.props);
     const {
       contentProps,
       className,
-      createTransition,
+      open,
       positionClassname,
-      transition,
-      transitionProps,
+      transition: {createTransition, transitionProps, transitionEl},
       ...other
     } = this.props;
     const classes = this.context.styleManager.render(styleSheet);
@@ -135,10 +137,11 @@ export class Snackbar extends Component {
         className={classNames(classes.modal, classes[positionClassname], className)}
         backdropVisible={false}
         backdropClassName={classes.backdrop}
+        show={open}
         {...other}
       >
         {createTransition(
-          transition,
+          transitionEl,
           transitionProps,
           <SnackbarContent {...contentProps} style={{ visibility: 'hidden' }} />
         )}

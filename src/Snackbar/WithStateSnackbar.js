@@ -20,20 +20,20 @@ const enhance = compose(
   withState('expired', 'updateExpired', false),
   withState('timerId', 'updateTimerId', null),
   withHandlers({
-    handleTimeout: props => () => {
-      if (!props.pause) {
-        props.onRequestClose();
+    handleTimeout: ({pause, onRequestClose, updateExpired}) => () => {
+      if (!pause) {
+        onRequestClose();
       }
-      props.updateExpired(true);
+      updateExpired(true);
     },
-    onMouseEnter: props => () => props.updatePause(true),
-    onMouseLeave: props => () => {
-      props.updatePause(false);
-      if (props.expired) props.onRequestClose();
+    handleMouseEnter: props => () => props.updatePause(true),
+    handleMouseLeave: ({expired, onRequestClose, updatePause}) => () => {
+      updatePause(false);
+      if (expired) onRequestClose();
     },
-    handleRequestClose: props => () => {
-      props.onRequestClose();
-      clearTimeout(props.timerId);
+    onRequestClose: ({timerId, onRequestClose}) => () => {
+      onRequestClose();
+      clearTimeout(timerId);
     },
   }),
   withHandlers({
@@ -42,34 +42,40 @@ const enhance = compose(
       updateTimerId(timerId);
     },
   }),
-  withProps(({anchorOrigin: anchorOriginProp, transition, enterTransitionDuration = Snackbar.defaultProps.enterTransitionDuration, leaveTransitionDuration = Snackbar.defaultProps.leaveTransitionDuration}) => ({
-    anchorOrigin: Object.assign({}, Snackbar.defaultProps.anchorOrigin, anchorOriginProp),
-    createTransition: typeof transition === 'function' ? createElement : cloneElement,
+  withProps(({
+      anchorOrigin: anchorOriginProp,
+      transition, enterTransitionDuration = Snackbar.defaultProps.enterTransitionDuration,
+      leaveTransitionDuration = Snackbar.defaultProps.leaveTransitionDuration
+    }) => ({
+      anchorOrigin: Object.assign({}, Snackbar.defaultProps.anchorOrigin, anchorOriginProp),
+      createTransition: typeof transition === 'function' ? createElement : cloneElement,
   })),
   mapProps(({ anchorOrigin: {vertical, horizontal}, createTransition, transition: transitionProp, ...props }) => ({
     contentProps: {
       children: props.children,
       message: props.message,
-      onMouseEnter: props.onMouseEnter,
-      onMouseLeave: props.onMouseLeave,
+      onMouseEnter: props.handleMouseEnter,
+      onMouseLeave: props.handleMouseLeave,
     },
-    createTransition,
     positionClassname: `pos-${vertical}-${horizontal}`,
-    onRequestClose: props.handleRequestClose,
-    show: props.open,
-    transitionProps: {
-      in: props.open,
-      transitionAppear: true,
-      enterTransitionDuration: props.leaveTransitionDuration,
-      leaveTransitionDuration: props.leaveTransitionDuration,
-      onEnter: noop,
-      onEntering: node => node.style.visibility = 'visible',
-      onEntered: () => props.setTimer(),
-      onExit: noop,
-      onExiting: noop,
-      onExited: () => props.updateExpired(false),
+    onRequestClose: props.onRequestClose,
+    open: props.open,
+    transition: {
+      createTransition,
+      transitionProps: {
+        in: props.open,
+        transitionAppear: true,
+        enterTransitionDuration: props.leaveTransitionDuration,
+        leaveTransitionDuration: props.leaveTransitionDuration,
+        onEnter: noop,
+        onEntering: node => node.style.visibility = 'visible',
+        onEntered: () => props.setTimer(),
+        onExit: noop,
+        onExiting: noop,
+        onExited: () => props.updateExpired(false),
+      },
+      transitionEl: transitionProp || <Slide direction={vertical === 'top' ? 'down' : 'up'} />,
     },
-    transition: transitionProp || <Slide direction={vertical === 'top' ? 'down' : 'up'} />,
   })),
 )
 
