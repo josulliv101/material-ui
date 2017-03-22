@@ -3,3 +3,4 @@
 export default from './Snackbar';
 export Snackbar from './Snackbar';
 export SnackbarActions from './SnackbarActions';
+export WithStateSnackbar from './WithStateSnackbar';

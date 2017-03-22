@@ -9,6 +9,7 @@ export const styleSheet = createStyleSheet('MuiSnackbarActions', () => {
   return {
     root: {
       marginLeft: 'auto',
+      paddingLeft: 24,
     },
     button: {
       padding: '0 6px',

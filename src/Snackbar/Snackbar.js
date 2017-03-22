@@ -5,14 +5,13 @@ import classNames from 'classnames';
 import { createStyleSheet } from 'jss-theme-reactor';
 import Modal from '../internal/Modal';
 import customPropTypes from '../utils/customPropTypes';
+import WithStateSnackbar from './WithStateSnackbar';
+import SnackbarContent from './SnackbarContent';
 import Slide from '../transitions/Slide';
-import Paper from '../Paper';
 import { duration } from '../styles/transitions';
 
-export const styleSheet = createStyleSheet('MuiSnackbar', ({ palette, breakpoints, zIndex }) => {
-  const type = palette.type === 'light' ? 'dark' : 'light';
+export const styleSheet = createStyleSheet('MuiSnackbar', ({ breakpoints }) => {
   const gutter = 24;
-  const backgroundColor = palette.shades[type].background.default;
   const topSpace = { top: `${gutter}px` };
   const bottomSpace = { top: `-${gutter}px` };
   const rightSpace = { left: `-${gutter}px` };
@@ -56,39 +55,6 @@ export const styleSheet = createStyleSheet('MuiSnackbar', ({ palette, breakpoint
         extend: [bottomSpace, leftSpace],
       },
     },
-    paper: {
-      color: palette.getContrastText(backgroundColor),
-      backgroundColor,
-      display: 'flex',
-      alignItems: 'center',
-      zIndex: zIndex.snackbar,
-      minWidth: '100%',
-      padding: `0 ${gutter}px`,
-      [breakpoints.up('md')]: {
-        minWidth: 288,
-        maxWidth: 568,
-      },
-      minHeight: 48,
-      maxHeight: 80,
-      '&:focus': {
-        outline: 'none',
-      },
-    },
-    message: {
-      lineHeight: '20px',
-      padding: '14px 0',
-      fontWeight: 500,
-      [breakpoints.up('md')]: {
-        whiteSpace: 'nowrap',
-        textOverflow: 'ellipsis',
-        overflowX: 'hidden',
-      },
-    },
-    action: {
-      '& $message': {
-        marginRight: gutter,
-      },
-    },
     backdrop: {
       tapHighlightColor: 'rgba(0, 0, 0, 0)',
     },
@@ -98,7 +64,7 @@ export const styleSheet = createStyleSheet('MuiSnackbar', ({ palette, breakpoint
 /**
  * Snackbar.
  */
-export default class Snackbar extends Component {
+export class Snackbar extends Component {
   static propTypes = {
     /**
      * The anchor of the `Snackbar`.
@@ -117,10 +83,6 @@ export default class Snackbar extends Component {
      */
     className: PropTypes.string,
     /**
-     * The elevation of the `Snackbar`.
-     */
-    elevation: PropTypes.number,
-    /**
      * Customizes duration of enter animation (ms)
      */
     enterTransitionDuration: PropTypes.number,
@@ -128,38 +90,6 @@ export default class Snackbar extends Component {
      * Customizes duration of leave animation (ms)
      */
     leaveTransitionDuration: PropTypes.number,
-    /**
-     * The message to display.
-     */
-    message: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-    /**
-     * The CSS class name of the message element.
-     */
-    messageClassName: PropTypes.string,
-    /**
-     * Callback fired before the component is entering.
-     */
-    onEnter: PropTypes.func,
-    /**
-     * Callback fired when the component is entering.
-     */
-    onEntering: PropTypes.func,
-    /**
-     * Callback fired when the component has entered.
-     */
-    onEntered: PropTypes.func, // eslint-disable-line react/sort-prop-types
-    /**
-     * Callback fired before the component is exiting.
-     */
-    onExit: PropTypes.func,
-    /**
-     * Callback fired when the component is exiting.
-     */
-    onExiting: PropTypes.func,
-    /**
-     * Callback fired when the component has exited.
-     */
-    onExited: PropTypes.func, // eslint-disable-line react/sort-prop-types
     /**
      * Callback fired when internal modal requests to be closed.
      */
@@ -169,92 +99,46 @@ export default class Snackbar extends Component {
      */
     open: PropTypes.bool,
     /**
-     * The CSS class name of the paper element.
-     */
-    paperClassName: PropTypes.string,
-    /**
      * Transition component.
      */
     transition: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-  };
-
-  static defaultProps = {
-    anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
-    autoHideDuration: 2000,
-    elevation: 2,
-    enterTransitionDuration: duration.enteringScreen,
-    leaveTransitionDuration: duration.leavingScreen,
-    onEnter: noop,
-    onEntering: (node) => {
-      node.style.visibility = 'visible';
-    },
-    onExit: noop,
-    onExiting: noop,
-    onExited: noop,
-    onRequestClose: noop,
-    open: false,
   };
 
   static contextTypes = {
     styleManager: customPropTypes.muiRequired,
   };
 
-  componentWillUnmount() {
-    clearTimeout(this.timerId);
-  }
+  static defaultProps = {
+    anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
+    autoHideDuration: 2000,
+    enterTransitionDuration: duration.enteringScreen,
+    leaveTransitionDuration: duration.leavingScreen,
+    open: true,
+  };
 
-  setTimer() {
-    this.timerId = setTimeout(this.props.onRequestClose, this.props.autoHideDuration);
+  componentWillUnmount() {
+    clearTimeout(this.props.timerId);
   }
 
   render() {
     const {
-      autoHideDuration, // eslint-disable-line
-      anchorOrigin: anchorOriginProp,
+      anchorOrigin: {vertical, horizontal},
       children,
       className,
-      elevation,
-      enterTransitionDuration,
-      leaveTransitionDuration,
+      createTransition,
+      expired,
       message,
-      messageClassName,
-      onEnter,
-      onEntering,
-      onEntered: onEnteredProp,
-      onExit,
-      onExiting,
-      onExited,
       onRequestClose,
       open,
-      paperClassName,
-      transition: transitionProp,
+      pause,
+      transition,
+      transitionProps,
+      togglePause,
       ...other
     } = this.props;
+
     const classes = this.context.styleManager.render(styleSheet);
-    const { vertical, horizontal } = Object.assign(
-      {},
-      Snackbar.defaultProps.anchorOrigin,
-      anchorOriginProp,
-    );
-    const transition = transitionProp || <Slide direction={vertical === 'top' ? 'down' : 'up'} />;
-    const transitionProps = {
-      in: open,
-      transitionAppear: true,
-      enterTransitionDuration,
-      leaveTransitionDuration,
-      onEnter,
-      onEntering,
-      onEntered: () => {
-        this.setTimer();
-        if (onEnteredProp) {
-          onEnteredProp();
-        }
-      },
-      onExit,
-      onExiting,
-      onExited,
-    };
-    const transitionFn = typeof transition === 'function' ? createElement : cloneElement;
+    console.log('render', this.props);
     return (
       <Modal
         className={classNames(classes.modal,
@@ -264,32 +148,28 @@ export default class Snackbar extends Component {
         backdropClassName={classes.backdrop}
         onRequestClose={() => {
           onRequestClose();
-          clearTimeout(this.timerId);
+          clearTimeout(this.props.timerId);
         }}
         show={open}
         {...other}
       >
-        {transitionFn(transition, transitionProps, (
-          <Paper
-            data-mui-test="Snackbar"
-            elevation={elevation}
-            className={classNames(
-              classes.paper,
-              { [classes.action]: !!children },
-              paperClassName,
-            )}
+        {createTransition(
+          transition,
+          transitionProps,
+          <SnackbarContent
+            onMouseEnter={() => togglePause()}
+            onMouseLeave={() => {
+              togglePause();
+              if (expired) onRequestClose();
+            }}
             style={{ visibility: 'hidden' }}
-          >
-            {
-              message &&
-              <span className={classNames(classes.message, messageClassName)}>{message}</span>
-            }
-            {children}
-          </Paper>
-        ))}
+            message={message}
+            children={children}
+          />
+        )}
       </Modal>
     );
   }
 }
 
-function noop() {}
+export default WithStateSnackbar(Snackbar)
