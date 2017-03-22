@@ -85,27 +85,20 @@ export default class SnackbarContent extends Component {
     const {
       children,
       className,
-      elevation,
-      expired,
       message,
       messageClassName,
-      onMouseEnter,
-      onMouseLeave,
-      onRequestClose,
       paperClassName,
-      togglePause
+      ...other
     } = this.props;
     const classes = this.context.styleManager.render(styleSheet);
     return (
       <Paper
         data-mui-test="Snackbar"
-        elevation={elevation}
         className={classNames(
           classes.paper,
           paperClassName,
         )}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+        {...other}
       >
         {
           message &&

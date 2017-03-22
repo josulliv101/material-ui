@@ -8,7 +8,7 @@ They may contain a text action, but no icons.
 Only one snackbar may be displayed at a time.
 
 ### Simple
-A basic snackbar. Mouse-over the snackbar delays the auto-hide functionality until user mouse-out.
+A basic snackbar. Mouse-over the snackbar to delay the auto-hide functionality until mouse-out.
 {{demo='demos/snackbars/SimpleSnackbar.js'}}
 
 ### Actions
