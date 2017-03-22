@@ -100,10 +100,7 @@ export default class SnackbarContent extends Component {
         )}
         {...other}
       >
-        {
-          message &&
-          <span className={classNames(classes.message, messageClassName)}>{message}</span>
-        }
+        { message && <span className={classNames(classes.message, messageClassName)}>{message}</span> }
         {children}
       </Paper>
     );

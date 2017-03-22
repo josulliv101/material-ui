@@ -112,7 +112,7 @@ export class Snackbar extends Component {
     autoHideDuration: 2000,
     enterTransitionDuration: duration.enteringScreen,
     leaveTransitionDuration: duration.leavingScreen,
-    open: true,
+    open: false,
   };
 
   componentWillUnmount() {
@@ -121,38 +121,20 @@ export class Snackbar extends Component {
 
   render() {
     const {
-      anchorOrigin: {vertical, horizontal},
-      children,
       contentProps,
       className,
       createTransition,
-      expired,
-      message,
-      onMouseEnter,
-      onMouseLeave,
-      onRequestClose,
-      open,
-      pause,
+      positionClassname,
       transition,
       transitionProps,
-      updatePause,
       ...other
     } = this.props;
-
     const classes = this.context.styleManager.render(styleSheet);
-
     return (
       <Modal
-        className={classNames(classes.modal,
-          classes[`pos-${vertical}-${horizontal}`],
-          className)}
+        className={classNames(classes.modal, classes[positionClassname], className)}
         backdropVisible={false}
         backdropClassName={classes.backdrop}
-        onRequestClose={() => {
-          onRequestClose();
-          clearTimeout(this.props.timerId);
-        }}
-        show={open}
         {...other}
       >
         {createTransition(

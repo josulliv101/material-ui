@@ -6,6 +6,7 @@ import { duration } from '../styles/transitions';
 import {
   compose,
   defaultProps,
+  mapProps,
   withHandlers,
   withProps,
   withState,
@@ -30,6 +31,10 @@ const enhance = compose(
       props.updatePause(false);
       if (props.expired) props.onRequestClose();
     },
+    handleRequestClose: props => () => {
+      props.onRequestClose();
+      clearTimeout(props.timerId);
+    },
   }),
   withHandlers({
     setTimer: ({handleTimeout, autoHideDuration, updateTimerId}) => () => {
@@ -41,13 +46,17 @@ const enhance = compose(
     anchorOrigin: Object.assign({}, Snackbar.defaultProps.anchorOrigin, anchorOriginProp),
     createTransition: typeof transition === 'function' ? createElement : cloneElement,
   })),
-  withProps(({ anchorOrigin: {vertical}, transition: transitionProp, ...props }) => ({
+  mapProps(({ anchorOrigin: {vertical, horizontal}, createTransition, transition: transitionProp, ...props }) => ({
     contentProps: {
       children: props.children,
       message: props.message,
       onMouseEnter: props.onMouseEnter,
       onMouseLeave: props.onMouseLeave,
     },
+    createTransition,
+    positionClassname: `pos-${vertical}-${horizontal}`,
+    onRequestClose: props.handleRequestClose,
+    show: props.open,
     transitionProps: {
       in: props.open,
       transitionAppear: true,
