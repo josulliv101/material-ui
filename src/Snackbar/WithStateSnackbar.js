@@ -50,7 +50,8 @@ export default compose(
       transitionFn: typeof transition === 'function' ? createElement : cloneElement,
       enterTransitionDuration: duration.enteringScreen,
       leaveTransitionDuration: duration.leavingScreen,
-    })),
+    }),
+  ),
   mapProps(({
     anchorOrigin: { vertical, horizontal }, transitionFn, transition, ...props }) => ({
       contentProps: {
