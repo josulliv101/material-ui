@@ -1,15 +1,12 @@
 // @flow weak
 
 import React, { createElement, cloneElement } from 'react';
-import { compose, defaultProps, mapProps, withHandlers, withProps, withState } from 'recompose';
+import { compose, mapProps, withHandlers, withProps, withState } from 'recompose';
 import { Snackbar } from './Snackbar';
 import Slide from '../transitions/Slide';
 import { duration } from '../styles/transitions';
 
 export default compose(
-  defaultProps({
-    autoHideDuration: 2000,
-  }),
   withState('pause', 'updatePause', false),
   withState('expired', 'updateExpired', false),
   withState('timerId', 'updateTimerId', null),
@@ -37,7 +34,11 @@ export default compose(
     },
   }),
   withHandlers({
-    setTimer: ({ handleTimeout, autoHideDuration, updateTimerId }) => () => {
+    setTimer: ({
+      handleTimeout,
+      autoHideDuration = Snackbar.defaultProps.autoHideDuration,
+      updateTimerId,
+    }) => () => {
       const timerId = setTimeout(handleTimeout, autoHideDuration);
       updateTimerId(timerId);
     },
