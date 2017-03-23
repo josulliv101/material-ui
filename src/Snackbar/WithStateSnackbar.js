@@ -50,8 +50,9 @@ export default compose(
   }),
   withProps(({
       anchorOrigin: anchorOriginProp,
-      transition, enterTransitionDuration = Snackbar.defaultProps.enterTransitionDuration,
-      leaveTransitionDuration = Snackbar.defaultProps.leaveTransitionDuration
+      transition,
+      enterTransitionDuration = duration.enteringScreen,
+      leaveTransitionDuration = duration.leavingScreen,
     }) => ({
       anchorOrigin: Object.assign({}, Snackbar.defaultProps.anchorOrigin, anchorOriginProp),
       createTransition: typeof transition === 'function' ? createElement : cloneElement,

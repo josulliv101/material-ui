@@ -112,8 +112,6 @@ export class Snackbar extends Component {
   static defaultProps = {
     anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
     autoHideDuration: 2000,
-    enterTransitionDuration: duration.enteringScreen,
-    leaveTransitionDuration: duration.leavingScreen,
     open: false,
   };
 
@@ -123,6 +121,8 @@ export class Snackbar extends Component {
 
   render() {
     const {
+      anchorOrigin, // eslint-disable-line no-unused-vars
+      autoHideDuration, // eslint-disable-line no-unused-vars
       contentProps,
       className,
       open,
