@@ -29,8 +29,9 @@ export default compose(
       }
       clearTimeout(timerId);
     },
-    handleExited: ({ updateExpired, onExited }) => () => {
+    handleExited: ({ updateExpired, updateIsMultiLine, onExited }) => () => {
       updateExpired(false);
+      updateIsMultiLine(false);
       if (onExited) {
         onExited();
       }
@@ -58,6 +59,7 @@ export default compose(
   ),
   mapProps(({
     anchorOrigin: { vertical, horizontal },
+    key,
     transitionFn,
     transition,
     updateIsMultiLine,

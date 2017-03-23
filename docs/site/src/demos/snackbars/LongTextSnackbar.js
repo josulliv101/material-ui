@@ -16,7 +16,7 @@ export default class SimpleSnackbar extends Component {
   render() {
     const sm = 'I love snacks.';
     const md = 'I love candy. I love cookies. I love cupcakes.';
-    const lg = 'I love candy. I love cookies. I love cupcakes. I love cheesecake.';
+    const lg = 'I love candy. I love cookies. I love cupcakes. I love cheesecake. I love chocolate.';
     return (
       <div>
         <Button onClick={() => this.setState({ open: true, message: sm })}>
@@ -34,7 +34,9 @@ export default class SimpleSnackbar extends Component {
           open={this.state.open}
           onRequestClose={this.handleRequestClose}
         >
-
+          <SnackbarActions>
+            <Button accent compact onClick={() => null}>undo</Button>
+          </SnackbarActions>
         </Snackbar>
       </div>
     );
