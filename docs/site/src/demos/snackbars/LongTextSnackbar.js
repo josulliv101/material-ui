@@ -15,8 +15,8 @@ export default class SimpleSnackbar extends Component {
 
   render() {
     const sm = 'I love snacks.';
-    const md = 'I love canolis. I love cookies. I love cupcakes.';
-    const lg = 'I love canolis. I love cookies. I love cupcakes. I love cheesecake.';
+    const md = 'I love candy. I love cookies. I love cupcakes.';
+    const lg = 'I love candy. I love cookies. I love cupcakes. I love cheesecake.';
     return (
       <div>
         <Button onClick={() => this.setState({ open: true, message: sm })}>
