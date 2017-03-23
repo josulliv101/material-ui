@@ -132,8 +132,8 @@ export class Snackbar extends Component {
 
   render() {
     const {
-      anchorOrigin, // eslint-disable-line no-unused-vars
-      autoHideDuration, // eslint-disable-line no-unused-vars
+      anchorOrigin,
+      autoHideDuration,
       contentProps,
       className,
       open,

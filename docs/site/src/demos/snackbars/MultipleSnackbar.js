@@ -35,7 +35,6 @@ export default class SimpleSnackbar extends Component {
           this.state.messages.length > 0 &&
           <Snackbar
             {...this.state.messages[0]}
-            anchorOrigin={{ vertical: 'top' }}
             open={this.state.open}
             onExited={this.handleNextSnackbar}
             onRequestClose={this.handleRequestClose}
