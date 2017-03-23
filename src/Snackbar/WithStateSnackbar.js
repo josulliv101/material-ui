@@ -53,7 +53,10 @@ export default compose(
     }),
   ),
   mapProps(({
-    anchorOrigin: { vertical, horizontal }, transitionFn, transition, ...props }) => ({
+    anchorOrigin: { vertical, horizontal },
+    transitionFn,
+    transition,
+    ...props }) => ({
       contentProps: {
         children: props.children,
         message: props.message,
