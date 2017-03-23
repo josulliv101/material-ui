@@ -34,9 +34,7 @@ export default class SimpleSnackbar extends Component {
           open={this.state.open}
           onRequestClose={this.handleRequestClose}
         >
-          <SnackbarActions>
-            <Button accent compact onClick={() => null}>undo</Button>
-          </SnackbarActions>
+
         </Snackbar>
       </div>
     );

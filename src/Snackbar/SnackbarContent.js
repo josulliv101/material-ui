@@ -31,7 +31,13 @@ export const styleSheet = createStyleSheet('MuiSnackbarContent', ({
       maxHeight: 80,
       '&:focus': {
         outline: 'none',
-      },
+      }
+    },
+    multiline: {
+      '& $message': {
+        // lineHeight: '16px',
+        padding: '24px 0',
+      }
     },
     message: {
       lineHeight: '20px',
@@ -89,6 +95,7 @@ export default class SnackbarContent extends Component {
     const {
       children,
       className,
+      isMultiLine,
       message,
       messageClassName,
       paperClassName,
@@ -101,12 +108,13 @@ export default class SnackbarContent extends Component {
         className={classNames(
           classes.paper,
           paperClassName,
+          {[classes.multiline]: isMultiLine}
         )}
         {...other}
       >
         {
           message &&
-          <span className={classNames(classes.message, messageClassName)}>{message}</span>
+          <span className={classNames(classes.message, messageClassName)}>{message} {isMultiLine?'multi':'single'}</span>
         }
         {children}
       </Paper>

@@ -10,6 +10,7 @@ export default compose(
   withState('pause', 'updatePause', false),
   withState('expired', 'updateExpired', false),
   withState('timerId', 'updateTimerId', null),
+  withState('isMultiLine', 'updateIsMultiLine', false),
   withHandlers({
     handleTimeout: ({ pause, onRequestClose, updateExpired }) => () => {
       if (!pause) {
@@ -59,9 +60,11 @@ export default compose(
     anchorOrigin: { vertical, horizontal },
     transitionFn,
     transition,
+    updateIsMultiLine,
     ...props }) => ({
       contentProps: {
         children: props.children,
+        isMultiLine: props.isMultiLine,
         message: props.message,
         onMouseEnter: props.handleMouseEnter,
         onMouseLeave: props.handleMouseLeave,
@@ -76,11 +79,14 @@ export default compose(
           transitionAppear: true,
           enterTransitionDuration: props.leaveTransitionDuration,
           leaveTransitionDuration: props.leaveTransitionDuration,
-          onEnter: noop,
+          onEnter: (node) => {
+            console.log('node', node.clientHeight, node.offsetHeight, node.scrollHeight);
+            updateIsMultiLine(node.clientHeight > 48);
+          },
           onEntering: (node) => {
             node.style.visibility = 'visible';
           },
-          onEntered: () => props.setTimer(),
+          onEntered: noop, // () => props.setTimer(),
           onExit: noop,
           onExiting: noop,
           onExited: props.handleExited,
