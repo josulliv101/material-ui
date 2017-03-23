@@ -122,7 +122,6 @@ export class Snackbar extends Component {
   }
 
   render() {
-    console.log('render', this.props);
     const {
       contentProps,
       className,

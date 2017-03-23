@@ -12,7 +12,7 @@ import {
   withState,
 } from 'recompose'
 
-const enhance = compose(
+export default compose(
   defaultProps({
     autoHideDuration: 2000,
   }),
@@ -35,6 +35,12 @@ const enhance = compose(
       onRequestClose();
       clearTimeout(timerId);
     },
+    handleExited: ({updateExpired, onExited}) => () => {
+      updateExpired(false);
+      if (onExited) {
+        onExited();
+      }
+    }
   }),
   withHandlers({
     setTimer: ({handleTimeout, autoHideDuration, updateTimerId}) => () => {
@@ -72,13 +78,11 @@ const enhance = compose(
         onEntered: () => props.setTimer(),
         onExit: noop,
         onExiting: noop,
-        onExited: () => props.updateExpired(false),
+        onExited: props.handleExited,
       },
       transitionEl: transitionProp || <Slide direction={vertical === 'top' ? 'down' : 'up'} />,
     },
   })),
 )
-
-export default enhance;
 
 function noop() {}
