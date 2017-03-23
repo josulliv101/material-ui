@@ -25,7 +25,11 @@ export default class SimpleSnackbar extends Component {
         >
           Snackbar (Element)
         </Button>
-        <Snackbar {...this.state} anchorOrigin={{ vertical: 'top' }} onRequestClose={this.handleRequestClose} />
+        <Snackbar
+          {...this.state}
+          anchorOrigin={{ vertical: 'top' }}
+          onRequestClose={this.handleRequestClose}
+        />
       </div>
     );
   }

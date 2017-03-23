@@ -1,25 +1,24 @@
 // @flow weak
 
-import React, { createElement, cloneElement, Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import { createStyleSheet } from 'jss-theme-reactor';
 import Modal from '../internal/Modal';
 import customPropTypes from '../utils/customPropTypes';
 import WithStateSnackbar from './WithStateSnackbar';
 import SnackbarContent from './SnackbarContent';
-import { duration } from '../styles/transitions';
 
 export const styleSheet = createStyleSheet('MuiSnackbar', ({ breakpoints }) => {
   const gutter = 24;
-  const [topSpace, bottomSpace, rightSpace, leftSpace, top, bottom, right, left] = [
+  const [top, bottom, right, left, topSpace, bottomSpace, rightSpace, leftSpace] = [
+    { alignItems: 'flex-start' },
+    { alignItems: 'flex-end' },
+    { justifyContent: 'flex-end' },
+    { justifyContent: 'flex-start' },
     { top: `${gutter}px` },
     { top: `-${gutter}px` },
     { left: `-${gutter}px` },
     { left: `${gutter}px` },
-    { alignItems: 'flex-start' },
-    { alignItems: 'flex-end' },
-    { justifyContent: 'flex-end' },
-    { justifyContent: 'flex-start' }
   ];
   return {
     modal: {
@@ -84,6 +83,10 @@ export class Snackbar extends Component {
      */
     className: PropTypes.string,
     /**
+     * Props associated with Snackbar content.
+     */
+    contentProps: PropTypes.object,
+    /**
      * Customizes duration of enter animation (ms)
      */
     enterTransitionDuration: PropTypes.number,
@@ -99,6 +102,14 @@ export class Snackbar extends Component {
      * If true, `Snackbar` is open.
      */
     open: PropTypes.bool,
+    /**
+     * The CSS class name of the modal position.
+     */
+    positionClassName: PropTypes.string,
+    /**
+     * The id resulting from the setTimeout call.
+     */
+    timerId: PropTypes.string,
     /**
      * Transition component.
      */
@@ -126,14 +137,14 @@ export class Snackbar extends Component {
       contentProps,
       className,
       open,
-      positionClassname,
-      transition: {createTransition, transitionProps, transitionEl},
+      positionClassName,
+      transition: { createTransition, transitionProps, transitionEl },
       ...other
     } = this.props;
     const classes = this.context.styleManager.render(styleSheet);
     return (
       <Modal
-        className={classNames(classes.modal, classes[positionClassname], className)}
+        className={classNames(classes.modal, classes[positionClassName], className)}
         backdropVisible={false}
         backdropClassName={classes.backdrop}
         show={open}
@@ -142,11 +153,11 @@ export class Snackbar extends Component {
         {createTransition(
           transitionEl,
           transitionProps,
-          <SnackbarContent {...contentProps} style={{ visibility: 'hidden' }} />
+          <SnackbarContent {...contentProps} style={{ visibility: 'hidden' }} />,
         )}
       </Modal>
     );
   }
 }
 
-export default WithStateSnackbar(Snackbar)
+export default WithStateSnackbar(Snackbar);

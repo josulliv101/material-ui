@@ -2,8 +2,6 @@
 
 import React, { Component } from 'react';
 import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import Icon from 'material-ui/Icon';
 import Snackbar, { SnackbarActions } from 'material-ui/Snackbar';
 
 export default class SimpleSnackbar extends Component {
@@ -16,12 +14,12 @@ export default class SimpleSnackbar extends Component {
 
   render() {
     const btnUndo = (
-      <Button key="1" accent onClick={() => console.log('action')}>Undo</Button>
+      <Button key="1" accent onClick={() => null}>Undo</Button>
     );
     const btnRedo = (
-      <Button key="2" accent onClick={() => console.log('action')}>Redo</Button>
+      <Button key="2" accent onClick={() => null}>Redo</Button>
     );
-    const actions = {  btnUndo, btnUndoRedo: [btnUndo, btnRedo] };
+    const actions = { btnUndo, btnUndoRedo: [btnUndo, btnRedo] };
     return (
       <div>
         <Button onClick={() => this.setState({ open: true, action: 'btnUndo' })}>

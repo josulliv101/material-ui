@@ -2,11 +2,15 @@
 
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import customPropTypes from '../utils/customPropTypes';
 import { createStyleSheet } from 'jss-theme-reactor';
+import customPropTypes from '../utils/customPropTypes';
 import Paper from '../Paper';
 
-export const styleSheet = createStyleSheet('MuiSnackbarContent', ({ palette, breakpoints, zIndex }) => {
+export const styleSheet = createStyleSheet('MuiSnackbarContent', ({
+    palette,
+    breakpoints,
+    zIndex,
+  }) => {
   const type = palette.type === 'light' ? 'dark' : 'light';
   const gutter = 24;
   const backgroundColor = palette.shades[type].background.default;
@@ -100,7 +104,10 @@ export default class SnackbarContent extends Component {
         )}
         {...other}
       >
-        { message && <span className={classNames(classes.message, messageClassName)}>{message}</span> }
+        {
+          message &&
+          <span className={classNames(classes.message, messageClassName)}>{message}</span>
+        }
         {children}
       </Paper>
     );
