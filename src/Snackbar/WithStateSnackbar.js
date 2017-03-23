@@ -22,8 +22,10 @@ export default compose(
       updatePause(false);
       if (expired) onRequestClose();
     },
-    onRequestClose: ({ timerId, onRequestClose }) => () => {
-      onRequestClose();
+    handleRequestClose: ({ timerId, onRequestClose }) => () => {
+      if (onRequestClose) {
+        onRequestClose();
+      }
       clearTimeout(timerId);
     },
     handleExited: ({ updateExpired, onExited }) => () => {
@@ -65,7 +67,7 @@ export default compose(
         onMouseLeave: props.handleMouseLeave,
       },
       positionClassName: `pos-${vertical}-${horizontal}`,
-      onRequestClose: props.onRequestClose,
+      onRequestClose: props.handleRequestClose,
       open: props.open,
       transition: {
         createTransition: transitionFn,
