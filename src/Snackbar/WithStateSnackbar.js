@@ -3,6 +3,7 @@
 import React, { createElement, cloneElement } from 'react';
 import { compose, mapProps, withHandlers, withProps, withState } from 'recompose';
 import { Snackbar } from './Snackbar';
+import { minHeight } from './SnackbarContent';
 import Slide from '../transitions/Slide';
 import { duration } from '../styles/transitions';
 
@@ -84,7 +85,7 @@ export default compose(
           enterTransitionDuration: props.leaveTransitionDuration,
           leaveTransitionDuration: props.leaveTransitionDuration,
           onEnter: (node) => {
-            updateIsMultiLine(node.clientHeight > 48);
+            updateIsMultiLine(node.clientHeight > minHeight);
           },
           onEntering: (node) => {
             node.style.visibility = 'visible';

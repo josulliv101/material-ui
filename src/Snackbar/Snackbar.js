@@ -71,7 +71,7 @@ export class Snackbar extends Component {
      */
     anchorOrigin: customPropTypes.origin,
     /**
-     * Duration before hide (ms)
+     * Duration before hide (ms).
      */
     autoHideDuration: PropTypes.number,
     /**

@@ -6,6 +6,7 @@ import { createStyleSheet } from 'jss-theme-reactor';
 import customPropTypes from '../utils/customPropTypes';
 import Paper from '../Paper';
 
+export const minHeight = 48;
 export const styleSheet = createStyleSheet('MuiSnackbarContent', ({
     palette,
     breakpoints,
@@ -27,7 +28,7 @@ export const styleSheet = createStyleSheet('MuiSnackbarContent', ({
         minWidth: 288,
         maxWidth: 568,
       },
-      minHeight: 48,
+      minHeight,
       maxHeight: 80,
       '&:focus': {
         outline: 'none',
