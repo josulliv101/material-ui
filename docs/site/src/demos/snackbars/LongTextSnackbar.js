@@ -29,14 +29,14 @@ export default class SimpleSnackbar extends Component {
           Large Message
         </Button>
         <Snackbar
-          anchorOrigin={{ vertical: 'top' }}
+          // anchorOrigin={{ vertical: 'top' }}
           message={this.state.message}
           open={this.state.open}
           onRequestClose={this.handleRequestClose}
-          stackedLayout={true}
+          // stackedLayout={true}
         >
           <SnackbarActions>
-            <Button accent compact onClick={() => null}>lorem dolorem</Button>
+            <Button accent compact onClick={() => null}>lorem ipsum dolorem</Button>
           </SnackbarActions>
         </Snackbar>
       </div>

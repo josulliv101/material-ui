@@ -55,6 +55,7 @@ export default compose(
       transitionFn: typeof transition === 'function' ? createElement : cloneElement,
       enterTransitionDuration: duration.enteringScreen,
       leaveTransitionDuration: duration.leavingScreen,
+      stackedLayout: true
     }),
   ),
   mapProps(({
