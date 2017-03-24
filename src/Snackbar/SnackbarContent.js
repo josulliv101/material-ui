@@ -44,7 +44,7 @@ export const styleSheet = createStyleSheet('MuiSnackbarContent', ({
       '&$multiline': {
         flexDirection: 'column',
         alignItems: 'flex-start',
-        maxHeight: 162,
+        maxHeight: 120,
         paddingBottom: 4,
         '& $message': {
           paddingBottom: 14,
