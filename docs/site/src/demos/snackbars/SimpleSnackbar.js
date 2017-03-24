@@ -27,7 +27,6 @@ export default class SimpleSnackbar extends Component {
         </Button>
         <Snackbar
           {...this.state}
-          anchorOrigin={{ vertical: 'top' }}
           onRequestClose={this.handleRequestClose}
         />
       </div>

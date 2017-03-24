@@ -75,25 +75,13 @@ export class Snackbar extends Component {
      */
     autoHideDuration: PropTypes.number,
     /**
-     * Menu contents, should be menu items.
-     */
-    children: PropTypes.node,
-    /**
      * The CSS class name of the root element.
      */
     className: PropTypes.string,
     /**
-     * Props associated with Snackbar content.
+     * Props associated with SnackbarContent.
      */
     contentProps: PropTypes.object,
-    /**
-     * Customizes duration of enter animation (ms)
-     */
-    enterTransitionDuration: PropTypes.number,
-    /**
-     * Customizes duration of leave animation (ms)
-     */
-    leaveTransitionDuration: PropTypes.number,
     /**
      * Callback fired when internal modal requests to be closed.
      */
@@ -106,10 +94,6 @@ export class Snackbar extends Component {
      * The CSS class name of the modal position.
      */
     positionClassName: PropTypes.string,
-    /**
-     * The id resulting from the setTimeout call.
-     */
-    timerId: PropTypes.string,
     /**
      * Transition component.
      */

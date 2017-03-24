@@ -29,7 +29,6 @@ export default class SimpleSnackbar extends Component {
           Undo/Redo Actions
         </Button>
         <Snackbar
-          anchorOrigin={{ vertical: 'top' }}
           message={'I love snacks.'}
           open={this.state.open}
           onRequestClose={this.handleRequestClose}
