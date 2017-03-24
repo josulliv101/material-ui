@@ -33,9 +33,10 @@ export default class SimpleSnackbar extends Component {
           message={this.state.message}
           open={this.state.open}
           onRequestClose={this.handleRequestClose}
+          stackedLayout={true}
         >
           <SnackbarActions>
-            <Button accent compact onClick={() => null}>undo</Button>
+            <Button accent compact onClick={() => null}>lorem dolorem</Button>
           </SnackbarActions>
         </Snackbar>
       </div>

@@ -70,6 +70,7 @@ export default compose(
         message: props.message,
         onMouseEnter: props.handleMouseEnter,
         onMouseLeave: props.handleMouseLeave,
+        stackedLayout: props.stackedLayout,
       },
       positionClassName: `pos-${vertical}-${horizontal}`,
       onRequestClose: props.handleRequestClose,
@@ -82,13 +83,12 @@ export default compose(
           enterTransitionDuration: props.leaveTransitionDuration,
           leaveTransitionDuration: props.leaveTransitionDuration,
           onEnter: (node) => {
-            console.log('node', node.clientHeight, node.offsetHeight, node.scrollHeight);
             updateIsMultiLine(node.clientHeight > 48);
           },
           onEntering: (node) => {
             node.style.visibility = 'visible';
           },
-          onEntered: noop, // () => props.setTimer(),
+          onEntered: () => props.setTimer(),
           onExit: noop,
           onExiting: noop,
           onExited: props.handleExited,

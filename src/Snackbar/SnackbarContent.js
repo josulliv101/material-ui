@@ -39,6 +39,23 @@ export const styleSheet = createStyleSheet('MuiSnackbarContent', ({
         padding: '24px 0',
       }
     },
+    stacked: {
+      '&$multiline': {
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        maxHeight: 162,
+        paddingBottom: 4,
+        '& $message': {
+          paddingBottom: 14,
+        },
+        [breakpoints.up('md')]: {
+          alignItems: 'inherit',
+          flexDirection: 'inherit',
+          maxHeight: 'inherit',
+          paddingBottom: 'inherit',
+        },
+      },
+    },
     message: {
       lineHeight: '20px',
       padding: '14px 0',
@@ -99,6 +116,7 @@ export default class SnackbarContent extends Component {
       message,
       messageClassName,
       paperClassName,
+      stackedLayout,
       ...other
     } = this.props;
     const classes = this.context.styleManager.render(styleSheet);
@@ -108,13 +126,14 @@ export default class SnackbarContent extends Component {
         className={classNames(
           classes.paper,
           paperClassName,
-          {[classes.multiline]: isMultiLine}
+          {[classes.multiline]: isMultiLine},
+          {[classes.stacked]: stackedLayout},
         )}
         {...other}
       >
         {
           message &&
-          <span className={classNames(classes.message, messageClassName)}>{message} {isMultiLine?'multi':'single'}</span>
+          <span className={classNames(classes.message, messageClassName)}>{message}</span>
         }
         {children}
       </Paper>
