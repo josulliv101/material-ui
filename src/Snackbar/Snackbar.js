@@ -95,7 +95,7 @@ export class Snackbar extends Component {
      */
     positionClassName: PropTypes.string,
     /**
-     * Transition component.
+     * Object with Transition component, props & create Fn.
      */
     transition: PropTypes.object,
   };
