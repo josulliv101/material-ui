@@ -61,7 +61,6 @@ export default compose(
   ),
   mapProps(({
     anchorOrigin: { vertical, horizontal },
-    key,
     transitionFn,
     transition,
     updateIsMultiLine,
