@@ -112,9 +112,9 @@ describe('<Slide />', () => {
             width: 500,
             height: 300,
             left: 300,
-            right: 500,
+            right: 800,
             top: 200,
-            bottom: 100,
+            bottom: 500,
           }),
           style: {},
         };
@@ -129,7 +129,7 @@ describe('<Slide />', () => {
         assert.strictEqual(element.style.transform, 'translate3d(-800px, 0, 0)');
         wrapper.setProps({ direction: 'up' });
         instance.handleEnter(element);
-        assert.strictEqual(element.style.transform, 'translate3d(0, calc(100vh - -200px), 0)');
+        assert.strictEqual(element.style.transform, 'translate3d(0, calc(100vh - 200px), 0)');
         wrapper.setProps({ direction: 'down' });
         instance.handleEnter(element);
         assert.strictEqual(element.style.transform, 'translate3d(0, -500px, 0)');
@@ -175,7 +175,7 @@ describe('<Slide />', () => {
         assert.strictEqual(element.style.transform, 'translate3d(-800px, 0, 0)');
         wrapper.setProps({ direction: 'up' });
         instance.handleEnter(element);
-        assert.strictEqual(element.style.transform, 'translate3d(0, calc(100vh - -200px), 0)');
+        assert.strictEqual(element.style.transform, 'translate3d(0, calc(100vh - 200px), 0)');
         wrapper.setProps({ direction: 'down' });
         instance.handleEnter(element);
         assert.strictEqual(element.style.transform, 'translate3d(0, -500px, 0)');
